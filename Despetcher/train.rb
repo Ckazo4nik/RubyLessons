@@ -1,46 +1,74 @@
-@@trains_all = {}
 class Train
-  attr_accessor :wagon_number, :type , :name, :speed
-  def initialize(number = 5, type = "pessenger", name = "Igor")
-    @wagon_number = number.to_i
+  attr_accessor :wagon, :type , :station, :speed, :route
+  def initialize(number, type)
     @type = type
-    @name = name
+    @number = number
+    @train = {number => @type}
     @speed = 0
-    @rout = "nil"
+    @wagon = 0
+    puts "Поїзд був створений "
   end
   def speed
-    @speed
+    puts "Швидість потяга #{@speed}"
   end
   def speed_up
-    @speed += 20
+    puts "Швидість потяга #{@speed += 20} збільшено на 20км"
   end
   def speed_down
-    @speed -= 20
+    puts "Швидість потяга #{@speed -= 20} зменшено на 20км"
   end
   def add_wagon
-    @wagon_number += 1
+    if speed == 0
+      puts "Вагон добавлено #{@wagon += 1}"
+    else
+      puts "Зупиніть потяг"
+    end
   end
   def delete_wagon
-    @wagon_number -= 1
+    puts "Вагон відчеплено #{@wagon -= 1}"
+  else
+    puts "Зупиніть потяг"
   end
-  def train_number
-    @wagon_number
+  def wagon
+    puts "Кількість вагонів = #{@wagon}"
   end
-  def go_rout
-    puts "Виберіть маршрут"
-    puts @@routs
-    number = gets.chomp.to_i
-    @rout = @@routs["#{number}"]
+  def take_route(station)
+    @station = station
+    puts "ПОтяг готовий їхати зі станції #{@station.first} на станцію #{@station.last}"
+  end
+  def move(station)
+    if @route.include?(station)
+      @station = station
+      puts "Поезд  приехал на с станцию #{@station}"
+    else
+      puts "Такой станции нет в маршруте"
+    end
   end
 
-  def train_registr
-    number = @@trains_all.length + 1
-    @@trains_all["#{number}"] = { @name => { @wagon_number => @type }}
+  def stop
+    if @speed == 0
+      puts "Потяг вже зупинений"
+    else
+      @speed = 0
+      puts "ПОтяг зупинено"
+    end
   end
-
   def type
-    @type
+    puts "У поїзда тип #{@type}"
   end
+  private
+  def count_hash_dublicate(hash, value)
+    count = 0
+    hash.values.each do |t|
+      if t == value
+        count += 1
+      end
+    end
+    return count
+  end
+
+
+
 end
 
 

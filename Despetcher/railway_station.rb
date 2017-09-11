@@ -1,40 +1,37 @@
-@@stations_all = {}
 class RailwayStation
-  attr_accessor :name_station
-  def initialize(name_station)
-    @name_station = name_station
-    @train = {}
+  attr_accessor :name
+  def initialize(name)
+    @name = name
+    @trains = {}
   end
-  def add_train
-    puts @@trains_all
-    puts "Виберіть номер поїзда, щоб додати на станцію"
-    number_train = gets.chomp.to_i
-    number = @train.length + 1
-    @train["#{number}"] = @@trains_all["#{number_train}"]
+  def list
+    puts "На станції зараз #{@trains.length} поїздів"
+  end
+  def list_type
+    puts "На станции поездов типа Freight: #{count_hash_dublicate(@trains, "freight")}"
+    puts "На станции поездов типа Passenger: #{count_hash_dublicate(@trains, "passenger")}"
   end
 
-  def train_now
-    @train
+  def take_train(train = {})
+    @number = train.keys.join
+    @type   = train.values.join
+    if @number.nil? || @type.nil?
+      puts "Неможливо приняти такий поїзд"
+    else
+      # @trains << {@number => @type}
+      @trains[@number] = @type
+      puts "Поїзд з номером#{@number} и і типом #{@type} принятий на станцію"
+    end
   end
- def station_registr
-   number = @@stations_all.length + 1
-   @@stations_all["#{number}"] = @name_station
- end
-  #def train_detal
-  #puts "Виберіть поїзд тип похїзда"
-  #puts " 1 пасажрський, 2 вантажний"
-  #number_train = gets.chomp.to_i
-  #a = 0
-  #b = 0
-  #while @train.length
-  #@train[a]
-  #end
-  #end
 
-  def train_go
-    puts " Виберіть потяг за номером"
-    puts @train
-    number = gets.chomp.to_i
-    @train["#{number}"].delete
+  def send_train(train = {})
+    @number = train.keys.join
+    @type   = train.values.join
+    if @trains.include?({@number => @type})
+      @trains.delete({@number => @type})
+      puts "Поїзд Номер: #{@number} покинув станцію"
+    else
+      puts "На станції немає такого поїзда"
+    end
   end
 end

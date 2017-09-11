@@ -1,40 +1,48 @@
-@@routs = {}
 class Rout
-  attr_accessor :name
-  def initialize(name)
-    @name = name
-    @station = {}
-  end
-  def reg_rout
-    number = @@routs.length + 1
-    @@routs["#{number}"] = @name
-  end
-  def station
-    @station
+  attr_accessor :route
+  def initialize(stations = [])
+    if stations.size >= 2
+      @stations = stations
+      # @route = []
+      puts "Маршрут #{@stations.first} - #{@stations.last} створений"
+    else
+      puts "В маршруті мало станцій"
+    end
   end
 
-  def first_station
-    @station.first
+  def start_route
+    puts "Перша станція данного маршрута #{@stations[0]}"
   end
-  def last_station
-    a = @station.to_a
-    a.last
+
+  def end_route
+    puts "Остання станція данного маршрута #{@stations[-1]}"
   end
-  def delete_statoin
-    puts "Виберіть станцію"
-    puts @station
-    number = gets.chomp.to_i
-    @station["#{number}"].delete
+
+  def middle_route
+    puts "Проміжні станції данного маршрута #{@stations[1..-2]}"
   end
-  def puts_sort
-    @station.sort
-    puts @station
+
+  def add(station)
+    @stations.insert(-2, station)
+    puts "Нова станція (#{station}) добавлена в маршрут"
   end
-  def add_station
-    puts "Виберіть станцію"
-    puts @@stations_all
-    number_station = gets.chomp.to_i
-    number = @station.length + 1
-    @station["#{number}"] = @@stations_all["#{number_station}"]
+
+  def delete(station)
+    if @stations.include?(station)
+      @stations.delete(station)
+      puts "Станція #{station} видалена з маршрута"
+    else
+      puts "Станція #{station} станція не в маршруті"
+    end
   end
+
+  def list
+    puts "Маршрут від #{@stations.first} до #{@stations.last}"
+    @stations.each_with_index{ |station, index| puts "#{index + 1}. #{station}"}
+  end
+
+  def stations
+    @stations
+  end
+
 end
