@@ -8,8 +8,15 @@ class Train
     @wagon = 0
     puts "Поїзд був створений "
   end
+  def number
+    @number
+  end
+  def train
+    @train
+  end
   def speed
     puts "Швидість потяга #{@speed}"
+    return @speed
   end
   def speed_up
     puts "Швидість потяга #{@speed += 20} збільшено на 20км"
@@ -17,20 +24,15 @@ class Train
   def speed_down
     puts "Швидість потяга #{@speed -= 20} зменшено на 20км"
   end
-  def add_wagon
-    if speed == 0
-      puts "Вагон добавлено #{@wagon += 1}"
-    else
-      puts "Зупиніть потяг"
-    end
-  end
   def delete_wagon
     puts "Вагон відчеплено #{@wagon -= 1}"
   else
     puts "Зупиніть потяг"
   end
   def wagon
+    @wagon
     puts "Кількість вагонів = #{@wagon}"
+    return @wagon
   end
   def take_route(station)
     @station = station
@@ -54,19 +56,16 @@ class Train
     end
   end
   def type
+    @type
     puts "У поїзда тип #{@type}"
   end
-  private
-  def count_hash_dublicate(hash, value)
-    count = 0
-    hash.values.each do |t|
-      if t == value
-        count += 1
-      end
-    end
-    return count
+
+  def wagon_type
+    @wagon_type
   end
 
+
+  private
 
 
 end

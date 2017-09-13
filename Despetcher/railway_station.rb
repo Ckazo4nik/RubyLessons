@@ -1,8 +1,11 @@
+@@station_all = {}
 class RailwayStation
   attr_accessor :name
   def initialize(name)
     @name = name
     @trains = {}
+    number = @@station_all.length + 1
+    @@station_all[number] = name
   end
   def list
     puts "На станції зараз #{@trains.length} поїздів"
@@ -12,26 +15,35 @@ class RailwayStation
     puts "На станции поездов типа Passenger: #{count_hash_dublicate(@trains, "passenger")}"
   end
 
-  def take_train(train = {})
-    @number = train.keys.join
-    @type   = train.values.join
+  def take_train(name)
+    @number = name.train.keys.join.to_i
+    @type = name.train.values.join
     if @number.nil? || @type.nil?
       puts "Неможливо приняти такий поїзд"
     else
       # @trains << {@number => @type}
       @trains[@number] = @type
-      puts "Поїзд з номером#{@number} и і типом #{@type} принятий на станцію"
+      puts "Поїзд з номером #{@number} и і типом #{@type} принятий на станцію"
     end
   end
 
-  def send_train(train = {})
-    @number = train.keys.join
-    @type   = train.values.join
-    if @trains.include?({@number => @type})
-      @trains.delete({@number => @type})
-      puts "Поїзд Номер: #{@number} покинув станцію"
+  def send_train!(name)
+    number = name.train.keys.join.to_i
+    type = name.train.values.join
+    if @trains[@number] = type
+      @trains.delete(number)
+      puts "Поїзд Номер: #{number} покинув станцію"
     else
       puts "На станції немає такого поїзда"
     end
+  end
+  def count_hash_dublicate(hash, value)
+    count = 0
+    hash.values.each do |t|
+      if t == value
+        count += 1
+      end
+    end
+    return count
   end
 end
