@@ -1,12 +1,13 @@
 
 
-require_relative "railway_station"
-require_relative "rout"
-require_relative "train"
-require_relative "passanger_train"
-require_relative "cargo_train"
-require_relative "passenger_wagon"
-require_relative "freight_wagon"
+require "./class/railway_station"
+require "./class/rout"
+require "./class/train"
+require "./class/passanger_train"
+require "./class/cargo_train"
+require "./class/passenger_wagon"
+require "./class/freight_wagon"
+
 
 
 s1 = RailwayStation.new "LViv"

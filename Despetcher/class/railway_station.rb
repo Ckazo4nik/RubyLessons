@@ -1,7 +1,15 @@
+require_relative "instance_counter"
+require_relative "company"
 @@station_all = {}
 class RailwayStation
+  include Company
+  include InstanceCounter
+  def self.all
+    @@station_all
+  end
   attr_accessor :name
   def initialize(name)
+    register_instance
     @name = name
     @trains = {}
     number = @@station_all.length + 1

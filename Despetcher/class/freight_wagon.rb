@@ -1,4 +1,6 @@
+require_relative "company"
 class FreightWagon
+  include Company
   def add_wagon(name)
     wagon_type = name.wagon_type
     speed = name.speed

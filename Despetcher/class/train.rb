@@ -1,12 +1,26 @@
+require_relative "company"
+require_relative "instance_counter"
+@@trains = {}
 class Train
+  include InstanceCounter
+  include Company
   attr_accessor :wagon, :type , :station, :speed, :route
   def initialize(number, type)
+    register_instance
     @type = type
     @number = number
     @train = {number => @type}
     @speed = 0
     @wagon = 0
+    @@trains[number] = @type
     puts "Поїзд був створений "
+  end
+  def self.find(number)
+    if @@trains.include?(number)
+      @@trains[number]
+    else
+      return nil
+    end
   end
   def number
     @number
