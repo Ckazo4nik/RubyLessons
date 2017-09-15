@@ -1,9 +1,12 @@
 require_relative "instance_counter"
 require_relative "company"
+require_relative "valid"
 @@station_all = {}
 class RailwayStation
+  include Valid
   include Company
   include InstanceCounter
+  VALID_NAME_STATION = /^[a-я]{4,8}$/i
   def self.all
     @@station_all
   end
@@ -14,9 +17,10 @@ class RailwayStation
     @trains = {}
     number = @@station_all.length + 1
     @@station_all[number] = name
+    validate!
   end
   def list
-    puts "На станції зараз #{@trains.length} поїздів"
+    @trains.length
   end
   def list_type
     puts "На станции поездов типа Freight: #{count_hash_dublicate(@trains, "freight")}"
@@ -53,5 +57,9 @@ class RailwayStation
       end
     end
     return count
+  end
+  protected
+  def validate!
+    raise "Невірне ім'я маршрута" if @name !~ VALID_NAME_STATION
   end
 end

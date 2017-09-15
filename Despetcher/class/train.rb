@@ -1,7 +1,10 @@
 require_relative "company"
 require_relative "instance_counter"
+require_relative "valid"
 @@trains = {}
+VALID_NUMBER = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
 class Train
+  include Valid
   include InstanceCounter
   include Company
   attr_accessor :wagon, :type , :station, :speed, :route
@@ -14,7 +17,9 @@ class Train
     @wagon = 0
     @@trains[number] = @type
     puts "Поїзд був створений "
+    validate!
   end
+
   def self.find(number)
     if @@trains.include?(number)
       @@trains[number]
@@ -25,28 +30,28 @@ class Train
   def number
     @number
   end
+  def set_number(number)
+    @number = number
+  end
   def train
     @train
   end
   def speed
-    puts "Швидість потяга #{@speed}"
-    return @speed
+    @speed
   end
   def speed_up
-    puts "Швидість потяга #{@speed += 20} збільшено на 20км"
+    @speed += 20
   end
   def speed_down
-    puts "Швидість потяга #{@speed -= 20} зменшено на 20км"
+    @speed -= 20
   end
   def delete_wagon
-    puts "Вагон відчеплено #{@wagon -= 1}"
+    @wagon -= 1
   else
     puts "Зупиніть потяг"
   end
   def wagon
     @wagon
-    puts "Кількість вагонів = #{@wagon}"
-    return @wagon
   end
   def take_route(station)
     @station = station
@@ -55,9 +60,9 @@ class Train
   def move(station)
     if @route.include?(station)
       @station = station
-      puts "Поезд  приехал на с станцию #{@station}"
+      puts "Поезд  приїхав на станцію #{@station}"
     else
-      puts "Такой станции нет в маршруте"
+      puts "Такої станції немає в маршруті"
     end
   end
 
@@ -66,12 +71,10 @@ class Train
       puts "Потяг вже зупинений"
     else
       @speed = 0
-      puts "ПОтяг зупинено"
     end
   end
   def type
     @type
-    puts "У поїзда тип #{@type}"
   end
 
   def wagon_type
@@ -79,8 +82,14 @@ class Train
   end
 
 
-  private
+  protected
+  def validate!
+    raise "Не пройшло валідацію (Допустимый формат: три буквы или цифры в любом порядке, необязательный дефис (может быть, а может нет) и еще 2 буквы или цифры после дефиса.)" if number !~ VALID_NUMBER
+    raise "Поїзд з таким номер вже створений" if @number
+  rescue
 
+    true
+  end
 
 end
 

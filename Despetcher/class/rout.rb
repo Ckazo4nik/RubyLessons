@@ -1,6 +1,10 @@
+require_relative "valid"
 class Rout
+  include Valid
   attr_accessor :route
-  def initialize(stations = [])
+  VALID_ROUT = /^[a-я]{4,6}-[a-я]{4,6}$/i
+  def initialize(rout ,stations = [])
+    @rout = rout
     if stations.size >= 2
       @stations = stations
       # @route = []
@@ -8,23 +12,23 @@ class Rout
     else
       puts "В маршруті мало станцій"
     end
+    validate!
   end
 
   def start_route
-    puts "Перша станція данного маршрута #{@stations[0]}"
+    @stations[0]
   end
 
   def end_route
-    puts "Остання станція данного маршрута #{@stations[-1]}"
+    @stations[-1]
   end
 
   def middle_route
-    puts "Проміжні станції данного маршрута #{@stations[1..-2]}"
+    @stations[1..-2]
   end
 
   def add(station)
     @stations.insert(-2, station)
-    puts "Нова станція (#{station}) добавлена в маршрут"
   end
 
   def delete(station)
@@ -45,4 +49,8 @@ class Rout
     @stations
   end
 
+  protected
+  def validate!
+    raise "Невірне ім'я маршрута " if @rout !~ VALID_ROUT
+  end
 end

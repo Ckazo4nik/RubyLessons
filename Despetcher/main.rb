@@ -13,8 +13,8 @@ require "./class/freight_wagon"
 s1 = RailwayStation.new "LViv"
 s2 = RailwayStation.new "kiyv"
 
-t1 = PassengerTrain.new 10, :passenger
-t2 = CargoTrain.new 15, :freight
+t1 = PassengerTrain.new '103-ds', :passenger
+t2 = CargoTrain.new 'we1-vv', :freight
 
 a = PassengerWagon.new
 b = FreightWagon.new
