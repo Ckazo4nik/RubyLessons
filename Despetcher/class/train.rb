@@ -14,7 +14,7 @@ class Train
     @number = number
     @train = {number => @type}
     @speed = 0
-    @wagon = 0
+    @wagon = 10
     @@trains[number] = @type
     puts "Поїзд був створений "
     validate!
@@ -65,6 +65,11 @@ class Train
       puts "Такої станції немає в маршруті"
     end
   end
+  def wagon_action
+    @wagon.times do |x|
+      yield(x)
+    end
+  end
 
   def stop
     if @speed == 0
@@ -85,7 +90,7 @@ class Train
   protected
   def validate!
     raise "Не пройшло валідацію (Допустимый формат: три буквы или цифры в любом порядке, необязательный дефис (может быть, а может нет) и еще 2 буквы или цифры после дефиса.)" if number !~ VALID_NUMBER
-    raise "Поїзд з таким номер вже створений" if @number
+    raise "Поїзд з таким номер вже створений" if @number == @@trains.key
   rescue
 
     true

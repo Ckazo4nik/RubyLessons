@@ -26,7 +26,11 @@ class RailwayStation
     puts "На станции поездов типа Freight: #{count_hash_dublicate(@trains, "freight")}"
     puts "На станции поездов типа Passenger: #{count_hash_dublicate(@trains, "passenger")}"
   end
-
+  def action_train
+    @trains.each do |x|
+      yield(x)
+    end
+  end
   def take_train(name)
     @number = name.train.keys.join.to_i
     @type = name.train.values.join
