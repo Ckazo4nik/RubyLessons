@@ -1,4 +1,4 @@
-require_relative "company"
+require_relative 'company'
 class PassengerWagon
   include Company
   def add_wagon(name)
@@ -9,21 +9,21 @@ class PassengerWagon
         name.wagon += 1
         puts "Вагон було добавлено, кількість вагонів = #{name.wagon}"
 
-
       else
-        puts "Даний тип вагонів не підходить для поїзда"
+        puts 'Даний тип вагонів не підходить для поїзда'
       end
     else
-      puts "Зупиніть потяг"
+      puts 'Зупиніть потяг'
     end
   end
+
   def delete_wagon(name)
     wagon_type = name.wagon_type
-      if wagon_type == PassengerWagon
-        name.wagon -= 1
-        puts "Вагон забрано"
-      else
-        puts "Даний тип вагонів не підходить для поїзда"
-      end
+    if wagon_type == PassengerWagon
+      name.wagon -= 1
+      puts 'Вагон забрано'
+    else
+      puts 'Даний тип вагонів не підходить для поїзда'
+    end
   end
 end
